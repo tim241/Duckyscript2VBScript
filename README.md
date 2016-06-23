@@ -1,9 +1,9 @@
-# Duckyscript2VBScript
+# Duckyscript2VBScript ©
 This is an Duckyscript to VBscript(visual basic script) converter.
 I created this in vb.net(visual basic .net) in visual studio 2015 community edition(free).
 The project files are located in the source/project.
 The compiled exe's are in compiled/release.
-# © Tim's Tech
+# Tim's Tech
 You can edit my Source code, but you can't publish it by yourself. You need to ask me if I want to edit the code in the Source.
 # About me
 Full name: Tim Wanders
