@@ -1,0 +1,11 @@
+C:\Users\tim24\OneDrive\Documents\Visual Studio 2015\Projects\Duckyscript2VBscript\Duckyscript2VBscript\bin\Release\Duckyscript2VBscript.exe.config
+C:\Users\tim24\OneDrive\Documents\Visual Studio 2015\Projects\Duckyscript2VBscript\Duckyscript2VBscript\bin\Release\Duckyscript2VBscript.exe
+C:\Users\tim24\OneDrive\Documents\Visual Studio 2015\Projects\Duckyscript2VBscript\Duckyscript2VBscript\bin\Release\Duckyscript2VBscript.pdb
+C:\Users\tim24\OneDrive\Documents\Visual Studio 2015\Projects\Duckyscript2VBscript\Duckyscript2VBscript\bin\Release\Duckyscript2VBscript.xml
+C:\Users\tim24\OneDrive\Documents\Visual Studio 2015\Projects\Duckyscript2VBscript\Duckyscript2VBscript\obj\Release\Duckyscript2VBscript.Form1.resources
+C:\Users\tim24\OneDrive\Documents\Visual Studio 2015\Projects\Duckyscript2VBscript\Duckyscript2VBscript\obj\Release\Duckyscript2VBscript.Resources.resources
+C:\Users\tim24\OneDrive\Documents\Visual Studio 2015\Projects\Duckyscript2VBscript\Duckyscript2VBscript\obj\Release\Duckyscript2VBscript.vbproj.GenerateResource.Cache
+C:\Users\tim24\OneDrive\Documents\Visual Studio 2015\Projects\Duckyscript2VBscript\Duckyscript2VBscript\obj\Release\Duckyscript2VBscript.exe
+C:\Users\tim24\OneDrive\Documents\Visual Studio 2015\Projects\Duckyscript2VBscript\Duckyscript2VBscript\obj\Release\Duckyscript2VBscript.xml
+C:\Users\tim24\OneDrive\Documents\Visual Studio 2015\Projects\Duckyscript2VBscript\Duckyscript2VBscript\obj\Release\Duckyscript2VBscript.pdb
+C:\Users\tim24\OneDrive\Documents\Visual Studio 2015\Projects\Duckyscript2VBscript\Duckyscript2VBscript\obj\Release\Duckyscript2VBscript.vbprojResolveAssemblyReference.cache

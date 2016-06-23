@@ -1,0 +1,3 @@
+﻿set wshshell = wscript.createobject("wscript.shell")
+set objshell = createobject("shell.application")
+string
