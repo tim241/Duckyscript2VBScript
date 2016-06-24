@@ -24,7 +24,7 @@ Public Class Form1
 
 
         TextBox2.Text = TextBox2.Text & Environment.NewLine & TextBox1.Text
-        TextBox2.CharacterCasing = CharacterCasing.Upper
+
         TextBox2.Text = TextBox2.Text.Replace("^", "{^}")
         TextBox2.Text = TextBox2.Text.Replace("(", "{(}")
         TextBox2.Text = TextBox2.Text.Replace(")", "{)}")
@@ -32,12 +32,10 @@ Public Class Form1
         TextBox2.Text = TextBox2.Text.Replace("|", "{|}")
         TextBox2.Text = TextBox2.Text.Replace("%", "{%}")
         TextBox2.Text = TextBox2.Text.Replace("""", """""")
-        TextBox2.Text = TextBox2.Text.Replace("SET WSHSHELL = WSCRIPT.CREATEOBJECT{(}""""WSCRIPT.SHELL""""{)}", "set wshshell = wscript.createobject(""wscript.shell"")")
-        TextBox2.Text = TextBox2.Text.Replace("SET OBJSHELL = CREATEOBJECT{(}""""SHELL.APPLICATION""""{)}", "set objshell = createobject(""shell.application"")")
+        TextBox2.Text = TextBox2.Text.Replace("set wshshell = wscript.createobject{(}""""wscript.shell""""{)}", "set wshshell = wscript.createobject(""wscript.shell"")")
+    TextBox2.Text = TextBox2.Text.Replace("set objshell = createobject{(}""""shell.application""""{)}", "set objshell = createobject(""shell.application"")")
         'TextBox2.Text = TextBox2.Text.Replace("STRING", "WshShell.SendKeys(""")
-        If TextBox2.Text.StartsWith("STRING", StringComparison.CurrentCultureIgnoreCase) Then
-            TextBox2.Text = "WshShell.SendKeys(""" & TextBox2.Text.Substring(6)
-        End If
+        TextBox2.Text = TextBox2.Text.Replace("STRING", "WshShell.SendKeys(""")
 
         TextBox2.Text = TextBox2.Text.Replace("ENTER", "WshShell.SendKeys(""{ENTER}"")")
         TextBox2.Text = TextBox2.Text.Replace("ALT", "WshShell.SendKeys(""%"")")
@@ -124,7 +122,7 @@ Public Class Form1
 
 
 
-        TextBox2.CharacterCasing = CharacterCasing.Lower
+
 
         TextBox2.Text = ""
 
@@ -188,7 +186,7 @@ Public Class Form1
     End Sub
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
-        If TextBox2.Text = ("") = True Then
+        If TextBox1.Text = ("") = True Then
             Button1.Enabled = False
         Else
             Button1.Enabled = True
