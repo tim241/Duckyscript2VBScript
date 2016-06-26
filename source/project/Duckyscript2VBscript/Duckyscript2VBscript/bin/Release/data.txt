@@ -1,5 +1,0 @@
-﻿set wshshell = wscript.createobject("wscript.shell")
-set objshell = createobject("shell.application")
-For i = 1 To 600
-	WshShell.SendKeys("hi")
-Next
