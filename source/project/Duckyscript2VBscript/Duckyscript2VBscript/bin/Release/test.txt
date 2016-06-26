@@ -1,1 +1,0 @@
-﻿Set WshShell = WScript.CreateObject("WScript.Shell")
