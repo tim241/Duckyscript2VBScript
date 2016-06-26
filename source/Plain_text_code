@@ -15,19 +15,7 @@ Public Class Form1
         If File.Exists("data.txt") = True Then
             File.Delete("data.txt")
         End If
-
-        ' Get the current lines.
-        Dim lines() As String = TextBox2.Lines
-        ' At line 0 Insert the "Hello World" string at position 2
-
-        ' Reassign the lines property.
-        TextBox2.Lines = lines
-
-
-
-        
         TextBox2.Text = TextBox2.Text & Environment.NewLine & TextBox1.Text
-
         TextBox2.Text = TextBox2.Text.Replace("^", "{^}")
         TextBox2.Text = TextBox2.Text.Replace("(", "{(}")
         TextBox2.Text = TextBox2.Text.Replace(")", "{)}")
@@ -37,14 +25,11 @@ Public Class Form1
         TextBox2.Text = TextBox2.Text.Replace("""", """""")
         TextBox2.Text = TextBox2.Text.Replace("set wshshell = wscript.createobject{(}""""wscript.shell""""{)}", "set wshshell = wscript.createobject(""wscript.shell"")")
         TextBox2.Text = TextBox2.Text.Replace("set objshell = createobject{(}""""shell.application""""{)}", "set objshell = createobject(""shell.application"")")
-
-        TextBox2.Text = TextBox2.Text.Replace("{'}This script is generated in Duckyscript2VBScript © converter", "'This script is generated in Duckyscript2VBScript © converter")
         TextBox2.Text = TextBox2.Text.Replace("STRING ", "WshShell.SendKeys(""") 'The space "string[space]" is needed.
         TextBox2.Text = TextBox2.Text.Replace("ENTER", "WshShell.SendKeys(""{ENTER}"")")
         TextBox2.Text = TextBox2.Text.Replace("ALT F4", "WshShell.SendKeys(""%{f4}"")")
         TextBox2.Text = TextBox2.Text.Replace("WINDOWS m", "objShell.MinimizeAll")
         TextBox2.Text = TextBox2.Text.Replace("WINDOWS d", "objShell.MinimizeAll")
-        'TextBox2.Text = TextBox2.Text.Replace("REPEAT ", "for i = 1 to ")
         TextBox2.Text = TextBox2.Text.Replace("GUI d", "objShell.MinimizeAll")
         TextBox2.Text = TextBox2.Text.Replace("GUI m", "objShell.MinimizeAll")
         TextBox2.Text = TextBox2.Text.Replace("ALT", "WshShell.SendKeys(""%"")")
@@ -85,62 +70,12 @@ Public Class Form1
         TextBox2.Text = TextBox2.Text.Replace("WshShell.SendKeys(""%{f4}"")", "WshShell.SendKeys(""%{F4}"")")
         My.Computer.FileSystem.WriteAllText("data.txt", TextBox2.Text, False)
         For Each Line As String In File.ReadLines("data.txt")
-
-
             If Line.StartsWith("STRING", StringComparison.InvariantCultureIgnoreCase) Then
                 Line = "WshShell.SendKeys(""" & Line.Substring(6)
             End If
-
         Next
-
-
-
-
-
-
-
-        'Dim Line As String = File.ReadLines("data.txt")
-        'If TextBox2.Lines.Contains("(""") Then
-        'TextBox2.AppendText(Line & """)" & Environment.NewLine)
-
-
-        'End If
-
-
-        'Dim index As Integer
-        'Dim customerName As String = "KEYS.SENDKEYS("" "
-
-        'For i As Integer = 1 To TextBox2.Lines.Length - 1
-        'If TextBox2.Lines(i - 1).Contains("Customer") Then
-        'customerName = TextBox2.Lines(i)
-        'Exit For
-        'End If
-        'Next
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         TextBox2.Text = ""
-
         For Each Line As String In File.ReadLines("data.txt")
-
-
             If Line.Contains("(""") Then
 
                 TextBox2.AppendText(Line & """)" & Environment.NewLine)
@@ -148,19 +83,46 @@ Public Class Form1
 
                 TextBox2.AppendText(Line & Environment.NewLine)
             End If
-
         Next
-
-
-
-
-
         TextBox2.Text = TextBox2.Text.Replace(""")"")", """)")
         TextBox2.Text = TextBox2.Text.Replace(""") "")", """)")
+
+        ' Handle the REPEAT command. Created by Andrio
+        Dim reader As StringReader = New StringReader(TextBox2.Text), outputLines As New List(Of String)
+        Do
+            Dim line = reader.ReadLine()
+            If line Is Nothing Then Exit Do  ' ReadLine returns null when the end of the text is reached.
+            Dim parts = line.TrimStart().Split(New Char() {" "c}, 2, StringSplitOptions.RemoveEmptyEntries)  ' TODO: Is this correct?
+            Dim parameter = If(parts.Length = 1, "", parts(1).Trim())
+            If parts(0) = "REPEAT" Then
+                If outputLines.Count <= 2 Then Throw New FormatException("REPEAT is not valid on the first line.")
+                Dim count As Integer
+                If Not Integer.TryParse(parts(1), count) Then
+                    ' TODO: Error handling
+                    Throw New FormatException("Parameter to the REPEAT command must be an integer.")
+                Else
+                    ' Wrap the previous instruction in a For loop.
+                    Dim counterVariable As Integer = AscW("i"c)
+                    Dim targetLine As Integer = outputLines.Count - 1
+                    Dim instructionLine As Integer = targetLine
+                    Do While outputLines(instructionLine).EndsWith("Next")
+                        instructionLine -= 1
+                        targetLine -= 2
+                        counterVariable += 1
+                    Loop
+                    ' Insert the loop.
+                    For i As Integer = targetLine To outputLines.Count - 1
+                        outputLines(i) = vbTab & outputLines(i)
+                    Next
+                    outputLines.Insert(targetLine, "For " & ChrW(counterVariable) & " = 1 To " & count)
+                    outputLines.Add("Next")
+                End If
+            Else
+                outputLines.Add(line)
+            End If
+        Loop
+        TextBox2.Text = String.Join(Environment.NewLine, outputLines) & Environment.NewLine
         My.Computer.FileSystem.WriteAllText("data.txt", TextBox2.Text, False)
-
-
-
     End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -171,20 +133,16 @@ Public Class Form1
         If File.Exists("data.txt") = True Then
             File.Delete("data.txt")
         End If
-
-
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         TextBox1.Text = ""
         TextBox1.Paste()
-
     End Sub
 
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
         TextBox1.Text = ""
         TextBox2.ResetText()
-
         TextBox2.Text = "Set WshShell = WScript.CreateObject(""WScript.Shell"")"
         TextBox2.Text = TextBox2.Text & Environment.NewLine & "set objShell = CreateObject(""Shell.Application"")"
     End Sub
@@ -198,7 +156,7 @@ Public Class Form1
     End Sub
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
-        If TextBox2.Text = ("") = True Then
+        If TextBox1.Text = ("") = True Then
             Button1.Enabled = False
         Else
             Button1.Enabled = True
@@ -211,37 +169,37 @@ Public Class Form1
     End Sub
 
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
-        'My.Computer.FileSystem.WriteAllText("script.vbs", TextBox2.Text, False)
-        Dim ANSIString() As Byte, MyEncoder As New System.Text.ASCIIEncoding()
-        Dim fFile As IO.File, fStream As IO.FileStream
-
-        ' Set the source string and filename
-        Dim sSourceString As String = TextBox2.Text
-        Dim sFilename As String = "script.vbs"
-
-        ' Store the ANSI encoded string in ANSIString
-        ANSIString = MyEncoder.Convert(System.Text.Encoding.UTF8, System.Text.Encoding.ASCII, MyEncoder.GetBytes(sSourceString))
-
-        Try
-
-            ' Delete the file if it already exists
-            If fFile.Exists(sFilename) Then
-                fFile.SetAttributes(sFilename, IO.FileAttributes.Normal)
-                fFile.Delete(sFilename)
-            End If
-
-            ' Output the bytes
-            fStream = fFile.OpenWrite(sFilename)
-            fStream.Write(ANSIString, 0, ANSIString.Length)
-            fStream.Close()
-
-        Catch myException As Exception
-            ' Show a message box if an error occurs
-            MessageBox.Show(myException.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
+        SaveFileDialog1.InitialDirectory = "C:\"
+        SaveFileDialog1.Title = "Save vbs Files"
+        SaveFileDialog1.CheckFileExists = False
+        SaveFileDialog1.CheckPathExists = True
+        SaveFileDialog1.DefaultExt = "VBS"
+        SaveFileDialog1.Filter = "VBS files (*.vbs)|*.vbs"
+        SaveFileDialog1.FilterIndex = 2
+        SaveFileDialog1.RestoreDirectory = True
+        SaveFileDialog1.ShowDialog()
     End Sub
 
     Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
         MsgBox("People who worked hard on this program: Tim Wanders and Andrio")
+    End Sub
+
+    Private Sub SaveFileDialog1_FileOk(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles SaveFileDialog1.FileOk
+        Dim ANSIString() As Byte, MyEncoder As New System.Text.ASCIIEncoding()
+        Dim fFile As IO.File, fStream As IO.FileStream
+        Dim sSourceString As String = TextBox2.Text
+        Dim sFilename As String = SaveFileDialog1.FileName
+        ANSIString = MyEncoder.Convert(System.Text.Encoding.UTF8, System.Text.Encoding.ASCII, MyEncoder.GetBytes(sSourceString))
+        Try
+            If fFile.Exists(sFilename) Then
+                fFile.SetAttributes(sFilename, IO.FileAttributes.Normal)
+                fFile.Delete(sFilename)
+            End If
+            fStream = fFile.OpenWrite(sFilename)
+            fStream.Write(ANSIString, 0, ANSIString.Length)
+            fStream.Close()
+        Catch myException As Exception
+            MessageBox.Show(myException.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
     End Sub
 End Class
