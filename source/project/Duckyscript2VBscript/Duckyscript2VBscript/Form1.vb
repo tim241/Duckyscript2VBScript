@@ -33,7 +33,7 @@ Public Class Form1
         TextBox2.Text = TextBox2.Text.Replace("%", "{%}")
         TextBox2.Text = TextBox2.Text.Replace("""", """""")
         TextBox2.Text = TextBox2.Text.Replace("set wshshell = wscript.createobject{(}""""wscript.shell""""{)}", "set wshshell = wscript.createobject(""wscript.shell"")")
-    TextBox2.Text = TextBox2.Text.Replace("set objshell = createobject{(}""""shell.application""""{)}", "set objshell = createobject(""shell.application"")")
+        TextBox2.Text = TextBox2.Text.Replace("set objshell = createobject{(}""""shell.application""""{)}", "set objshell = createobject(""shell.application"")")
         'TextBox2.Text = TextBox2.Text.Replace("STRING", "WshShell.SendKeys(""")
         TextBox2.Text = TextBox2.Text.Replace("STRING", "WshShell.SendKeys(""")
 
@@ -145,6 +145,46 @@ Public Class Form1
 
         TextBox2.Text = TextBox2.Text.Replace(""")"")", """)")
         TextBox2.Text = TextBox2.Text.Replace(""") "")", """)")
+
+        ' Handle the REPEAT command.
+        Dim reader As StringReader = New StringReader(TextBox2.Text), outputLines As New List(Of String)
+        Do
+            Dim line = reader.ReadLine()
+            If line Is Nothing Then Exit Do  ' ReadLine returns null when the end of the text is reached.
+
+            Dim parts = line.TrimStart().Split(New Char() {" "c}, 2, StringSplitOptions.RemoveEmptyEntries)  ' TODO: Is this correct?
+            Dim parameter = If(parts.Length = 1, "", parts(1).Trim())
+            If parts(0) = "REPEAT" Then
+                If outputLines.Count <= 2 Then Throw New FormatException("REPEAT is not valid on the first line.")
+                Dim count As Integer
+                If Not Integer.TryParse(parts(1), count) Then
+                    ' TODO: Error handling
+                    Throw New FormatException("Parameter to the REPEAT command must be an integer.")
+                Else
+                    ' Wrap the previous instruction in a For loop.
+                    Dim counterVariable As Integer = AscW("i"c)
+                    Dim targetLine As Integer = outputLines.Count - 1
+                    Dim instructionLine As Integer = targetLine
+
+                    Do While outputLines(instructionLine).EndsWith("Next")
+                        instructionLine -= 1
+                        targetLine -= 2
+                        counterVariable += 1
+                    Loop
+
+                    ' Insert the loop.
+                    For i As Integer = targetLine To outputLines.Count - 1
+                        outputLines(i) = vbTab & outputLines(i)
+                    Next
+                    outputLines.Insert(targetLine, "For " & ChrW(counterVariable) & " = 1 To " & count)
+                    outputLines.Add("Next")
+                End If
+            Else
+                outputLines.Add(line)
+            End If
+        Loop
+        TextBox2.Text = String.Join(Environment.NewLine, outputLines) & Environment.NewLine
+
         My.Computer.FileSystem.WriteAllText("data.txt", TextBox2.Text, False)
 
 
