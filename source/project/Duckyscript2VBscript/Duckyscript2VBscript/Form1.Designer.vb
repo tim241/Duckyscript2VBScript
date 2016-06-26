@@ -32,6 +32,7 @@ Partial Class Form1
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.Button4 = New System.Windows.Forms.Button()
         Me.Button5 = New System.Windows.Forms.Button()
+        Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
         Me.SuspendLayout()
         '
         'Button1
@@ -102,6 +103,9 @@ Partial Class Form1
         Me.Button5.Text = "Credits"
         Me.Button5.UseVisualStyleBackColor = True
         '
+        'SaveFileDialog1
+        '
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -130,4 +134,5 @@ Partial Class Form1
     Public WithEvents Button1 As Button
     Friend WithEvents Button4 As Button
     Friend WithEvents Button5 As Button
+    Friend WithEvents SaveFileDialog1 As SaveFileDialog
 End Class

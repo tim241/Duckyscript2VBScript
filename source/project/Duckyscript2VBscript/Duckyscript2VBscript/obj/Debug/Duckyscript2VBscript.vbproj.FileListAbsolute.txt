@@ -10,3 +10,7 @@ C:\Users\tim24\OneDrive\Documents\Visual Studio 2015\Projects\Duckyscript2VBscri
 C:\Users\tim24\OneDrive\Documents\Visual Studio 2015\Projects\Duckyscript2VBscript\Duckyscript2VBscript\obj\Debug\Duckyscript2VBscript.xml
 C:\Users\tim24\OneDrive\Documents\Visual Studio 2015\Projects\Duckyscript2VBscript\Duckyscript2VBscript\obj\Debug\Duckyscript2VBscript.pdb
 C:\Users\tim24\OneDrive\Documents\Visual Studio 2015\Projects\Duckyscript2VBscript\Duckyscript2VBscript\obj\Debug\Duckyscript2VBscript.vbprojResolveAssemblyReference.cache
+C:\Users\tim24\Desktop\Duckyscript2VBScript-master\source\project\Duckyscript2VBscript\Duckyscript2VBscript\bin\Debug\Duckyscript2VBscript.exe.config
+C:\Users\tim24\Desktop\Duckyscript2VBScript-master\source\project\Duckyscript2VBscript\Duckyscript2VBscript\obj\Debug\Duckyscript2VBscript.exe
+C:\Users\tim24\Desktop\Duckyscript2VBScript-master\source\project\Duckyscript2VBscript\Duckyscript2VBscript\obj\Debug\Duckyscript2VBscript.xml
+C:\Users\tim24\Desktop\Duckyscript2VBScript-master\source\project\Duckyscript2VBscript\Duckyscript2VBscript\obj\Debug\Duckyscript2VBscript.pdb
