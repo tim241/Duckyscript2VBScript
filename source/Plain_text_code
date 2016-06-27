@@ -10,7 +10,8 @@ Public Class Form1
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        TextBox2.Text = "set wshshell = wscript.createobject(""wscript.shell"")"
+        TextBox2.Text = "'This script is generated in the Duckyscript2VBScript © converter."
+        TextBox2.Text = TextBox2.Text & Environment.NewLine & "set wshshell = wscript.createobject(""wscript.shell"")"
         TextBox2.Text = TextBox2.Text & Environment.NewLine & "set objshell = createobject(""shell.application"")"
         If File.Exists("data.txt") = True Then
             File.Delete("data.txt")
@@ -23,6 +24,7 @@ Public Class Form1
         TextBox2.Text = TextBox2.Text.Replace("|", "{|}")
         TextBox2.Text = TextBox2.Text.Replace("%", "{%}")
         TextBox2.Text = TextBox2.Text.Replace("""", """""")
+        TextBox2.Text = TextBox2.Text.Replace("{'}This script is generated in the Duckyscript2VBScript © converter.", "'This script is generated in the Duckyscript2VBScript © converter.")
         TextBox2.Text = TextBox2.Text.Replace("set wshshell = wscript.createobject{(}""""wscript.shell""""{)}", "set wshshell = wscript.createobject(""wscript.shell"")")
         TextBox2.Text = TextBox2.Text.Replace("set objshell = createobject{(}""""shell.application""""{)}", "set objshell = createobject(""shell.application"")")
         TextBox2.Text = TextBox2.Text.Replace("STRING ", "WshShell.SendKeys(""") 'The space "string[space]" is needed.
@@ -66,6 +68,7 @@ Public Class Form1
         TextBox2.Text = TextBox2.Text.Replace("ESCAPE", "WshShell.SendKeys(""{ESC}"")")
         TextBox2.Text = TextBox2.Text.Replace("ESC", "WshShell.SendKeys(""{ESC}"")")
         TextBox2.Text = TextBox2.Text.Replace("REM", "'")
+        TextBox2.Text = TextBox2.Text.Replace("CTRL", "WshShell.SendKeys(""^")
         TextBox2.Text = TextBox2.Text.Replace("TAB", "WshShell.SendKeys(""{TAB}"")")
         TextBox2.Text = TextBox2.Text.Replace("WshShell.SendKeys(""%{f4}"")", "WshShell.SendKeys(""%{F4}"")")
         My.Computer.FileSystem.WriteAllText("data.txt", TextBox2.Text, False)
