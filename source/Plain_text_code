@@ -205,4 +205,7 @@ Public Class Form1
             MessageBox.Show(myException.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
+    Private Sub FormStudents_FormClosing(sender As System.Object, e As System.Windows.Forms.FormClosingEventArgs) Handles MyBase.FormClosing
+        File.Delete(IO.Path.Combine(IO.Path.GetTempPath, "data.txt"))
+    End Sub
 End Class
