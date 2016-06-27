@@ -128,8 +128,8 @@ Public Class Form1
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         TextBox1.Text = "Put your DuckyScript code here."
-        TextBox2.Text = "set wshshell = wscript.createobject(""wscript.shell"")"
-        TextBox2.Text = TextBox2.Text & Environment.NewLine & "set objshell = createobject(""shell.application"")"
+        TextBox2.Text = "Here will be your VBScript output."
+        
         Timer1.Start()
         If File.Exists("data.txt") = True Then
             File.Delete("data.txt")
