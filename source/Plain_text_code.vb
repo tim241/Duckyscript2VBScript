@@ -30,10 +30,12 @@ Public Class Form1
         TextBox2.Text = TextBox2.Text.Replace("STRING ", "WshShell.SendKeys(""") 'The space "string[space]" is needed.
         TextBox2.Text = TextBox2.Text.Replace("ENTER", "WshShell.SendKeys(""{ENTER}"")")
         TextBox2.Text = TextBox2.Text.Replace("ALT F4", "WshShell.SendKeys(""%{f4}"")")
-        TextBox2.Text = TextBox2.Text.Replace("WINDOWS m", "objShell.MinimizeAll")
-        TextBox2.Text = TextBox2.Text.Replace("WINDOWS d", "objShell.MinimizeAll")
-        TextBox2.Text = TextBox2.Text.Replace("GUI d", "objShell.MinimizeAll")
-        TextBox2.Text = TextBox2.Text.Replace("GUI m", "objShell.MinimizeAll")
+        TextBox2.Text = TextBox2.Text.Replace("WINDOWS M", "objShell.MinimizeAll")
+        TextBox2.Text = TextBox2.Text.Replace("WINDOWS L", "objShell.Run ""%windir%\System32\rundll32.exe user32.dll,LockWorkStation""")
+        TextBox2.Text = TextBox2.Text.Replace("GUI L", "objShell.Run ""%windir%\System32\rundll32.exe user32.dll,LockWorkStation""")
+        TextBox2.Text = TextBox2.Text.Replace("WINDOWS D", "objShell.MinimizeAll")
+        TextBox2.Text = TextBox2.Text.Replace("GUI D", "objShell.MinimizeAll")
+        TextBox2.Text = TextBox2.Text.Replace("GUI M", "objShell.MinimizeAll")
         TextBox2.Text = TextBox2.Text.Replace("ALT", "WshShell.SendKeys(""%"")")
         TextBox2.Text = TextBox2.Text.Replace("WINDOWS r", "objShell.FileRun")
         TextBox2.Text = TextBox2.Text.Replace("GUI r", "objShell.FileRun")
@@ -207,5 +209,12 @@ Public Class Form1
     End Sub
     Private Sub FormStudents_FormClosing(sender As System.Object, e As System.Windows.Forms.FormClosingEventArgs) Handles MyBase.FormClosing
         File.Delete(IO.Path.Combine(IO.Path.GetTempPath, "data.txt"))
+
+
+    End Sub
+    Private Sub txt_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles TextBox2.KeyDown
+        If e.Control And e.KeyCode = Keys.A Then
+            TextBox2.SelectAll()
+        End If
     End Sub
 End Class
